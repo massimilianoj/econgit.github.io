@@ -1,8 +1,10 @@
-.Rproj.user
 .Rhistory
 .RData
 .Ruserdata
+.Rproj.user
+blogdown
 node_modules/
 public
 themes/**
 .DS_Store
+data/**
