@@ -11,7 +11,7 @@ env:
   - secure: R8A6Jh8wIzy0jkzudvzRTUaQyj3QY09T1PHCCPqskHoeFXImoQMiyijLbmRxGRyqG3WOcJ5biA8xuLfPuwoeNOWycL7E0ksiS9Wc6oMB3JY9TdVhUj35uZ2+0C5o39oCs5mcxQDUb1ZjC0nX12Q9f2s5zTCr/7hZQwM6rAhKVi/Mgfu3Nz3Upn6iBGoyLkZ1q+SRlTC92WnAPbsvXQiOiY6MkyVPjI0HNTno7eClrJS8nAQJySdi+9q8Xb+ScoTHK7YnFsffoieAA3hHZbfxN3F6NPRrkZOOxgmSY7D0TGIuJemQE/hz06kqYHr1BkFYqYGjadl4u+bsx5UkyeOrnjyl1ciz197kQdKeyKvHTfele04RZjnx0ACsvhGDw7qW/fy3GGVs4wpIxWw8pLi6c2Lzaa90Husi+SCJucrc/jkN5tsQWj7b1EgeIvhtD9P28cf8REuwM//FCmb7qkDVqfYSPCzbsRDxmGq03WdFfbgolTRgng78SYCwHttsyTWHQPJNBx/tl+VpduSaz5XKWOSSIVwem+tUn1HmW6TaPL2vsPe+cMbO8109WxEAu4LI4CKTzOms1ZxCdWKWCQYbb93jMx1g/GPl7hvX4lEKM4qsjhhGgmdhb1id+PKgAh/dWqwZuOQN8dfAJj5IdZcrQVPc/dX10B1qmmL+mAAoD60=
 
 before_install:
-  - openssl aes-256-cbc -k "$secret" -in .travis/deploy_key.enc -d -a -out deploy.key
+   - openssl aes-256-cbc -k "$SERVER_KEY" -in .travis/deploy_key.enc -d -a -out deploy.key
 
 before_script:
 - go get -u -v github.com/spf13/hugo
