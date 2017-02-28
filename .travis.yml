@@ -1,0 +1,23 @@
+language: go
+
+go:
+    - "1.7.1"
+
+env:
+    global:
+        - SSH_KEY="id_rsa"
+        - GIT_NAME="Akira Matsui"
+        - GIT_EMAIL="akira00120@gmail.com"
+        - SOURCE_DIR="public"
+        - DEPLOY_BRANCH="source"
+
+before_install:
+    - openssl aes-256-cbc -K $encrypted_5badef0aa7c9_key -iv $encrypted_5badef0aa7c9_iv -in deploy_key.enc -out id_rsa -d
+
+before_script:
+    - go get -u -v github.com/spf13/hugo
+script:
+    - hugo
+
+after_success:
+    - ./scripts/deploy.sh
