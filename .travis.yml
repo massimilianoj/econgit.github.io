@@ -8,10 +8,9 @@ env:
   - GIT_EMAIL="akira00120@gmail.com"
   - SOURCE_DIR="public"
   - DEPLOY_BRANCH="source"
-  - secure: R8A6Jh8wIzy0jkzudvzRTUaQyj3QY09T1PHCCPqskHoeFXImoQMiyijLbmRxGRyqG3WOcJ5biA8xuLfPuwoeNOWycL7E0ksiS9Wc6oMB3JY9TdVhUj35uZ2+0C5o39oCs5mcxQDUb1ZjC0nX12Q9f2s5zTCr/7hZQwM6rAhKVi/Mgfu3Nz3Upn6iBGoyLkZ1q+SRlTC92WnAPbsvXQiOiY6MkyVPjI0HNTno7eClrJS8nAQJySdi+9q8Xb+ScoTHK7YnFsffoieAA3hHZbfxN3F6NPRrkZOOxgmSY7D0TGIuJemQE/hz06kqYHr1BkFYqYGjadl4u+bsx5UkyeOrnjyl1ciz197kQdKeyKvHTfele04RZjnx0ACsvhGDw7qW/fy3GGVs4wpIxWw8pLi6c2Lzaa90Husi+SCJucrc/jkN5tsQWj7b1EgeIvhtD9P28cf8REuwM//FCmb7qkDVqfYSPCzbsRDxmGq03WdFfbgolTRgng78SYCwHttsyTWHQPJNBx/tl+VpduSaz5XKWOSSIVwem+tUn1HmW6TaPL2vsPe+cMbO8109WxEAu4LI4CKTzOms1ZxCdWKWCQYbb93jMx1g/GPl7hvX4lEKM4qsjhhGgmdhb1id+PKgAh/dWqwZuOQN8dfAJj5IdZcrQVPc/dX10B1qmmL+mAAoD60=
-
+  - secure: e6yPq9GXTNL3yVGJxzz29hRK9Fjf2jugTsyrGMzRITIUc34j17gK9p9r+TPOaqya46iK/SLYCCG7SNBzAkyjLKxftac2g1TZQc4y24p84Iz86NfIA4nesF2PGBZBlXW7VvRklqUOEBwnER0Knbuxpn1scOwYHmn2oXQ/B/Zzb9nlMr2JYxOCvHNlfsoBM9am8RoYkCwKGOAH0tl8K4N7N8TpAfyTdtUVIgmv6q+iOMvMbe91jRvbY+RcO+EYBBjYfe6fZJnVXnJRA3EbDkX0EpGfok3xh96tshSKztKdTRPlcLzZovNUCXJxNlUaCOMBLTuGgDO8JQa8odL3sAOtjwFV8E7j2Jod0ZhVBWnDLKQtAFWSu4pYbkfK3FGP+7Y0KTkohMu6/tJ6NO8rzTpPwGtEElBSCdysWMUKAeJtT9HKMRSVuqN2Q4nLjobYRsPIQfrWT5a3S2UvIP2m/oSK/xWT6insIJX28ePw+ZWeN5KHV7mJajqgL1WUkPucvih/ETTI4i24sm2Wanw9M6u75W+v/WrDCq2QLNjRs+t6Nz4TLPXN0nCydjrv6LmWMWTZZigR13BYnQSqJDipIRviSMup23eas2l0mS4/TNDV0HZMp35pyVtWSvVNLoCfJK9oW6a3Zvz5rRrRyCr0qlrWCgG4owv61xo5oSKMHO/CBqg=
 before_install:
-   - openssl aes-256-cbc -k "$SERVER_KEY" -in deploy_key.enc -d -a -out deploy.key
+- openssl aes-256-cbc -k "$secret" -in .travis/deploy_key.enc -d -a -out deploy.key
 
 before_script:
 - go get -u -v github.com/spf13/hugo
