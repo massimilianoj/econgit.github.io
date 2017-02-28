@@ -8,10 +8,8 @@ env:
   - GIT_EMAIL="akira00120@gmail.com"
   - SOURCE_DIR="public"
   - DEPLOY_BRANCH="source"
-  - secure: e6yPq9GXTNL3yVGJxzz29hRK9Fjf2jugTsyrGMzRITIUc34j17gK9p9r+TPOaqya46iK/SLYCCG7SNBzAkyjLKxftac2g1TZQc4y24p84Iz86NfIA4nesF2PGBZBlXW7VvRklqUOEBwnER0Knbuxpn1scOwYHmn2oXQ/B/Zzb9nlMr2JYxOCvHNlfsoBM9am8RoYkCwKGOAH0tl8K4N7N8TpAfyTdtUVIgmv6q+iOMvMbe91jRvbY+RcO+EYBBjYfe6fZJnVXnJRA3EbDkX0EpGfok3xh96tshSKztKdTRPlcLzZovNUCXJxNlUaCOMBLTuGgDO8JQa8odL3sAOtjwFV8E7j2Jod0ZhVBWnDLKQtAFWSu4pYbkfK3FGP+7Y0KTkohMu6/tJ6NO8rzTpPwGtEElBSCdysWMUKAeJtT9HKMRSVuqN2Q4nLjobYRsPIQfrWT5a3S2UvIP2m/oSK/xWT6insIJX28ePw+ZWeN5KHV7mJajqgL1WUkPucvih/ETTI4i24sm2Wanw9M6u75W+v/WrDCq2QLNjRs+t6Nz4TLPXN0nCydjrv6LmWMWTZZigR13BYnQSqJDipIRviSMup23eas2l0mS4/TNDV0HZMp35pyVtWSvVNLoCfJK9oW6a3Zvz5rRrRyCr0qlrWCgG4owv61xo5oSKMHO/CBqg=
-before_install:
-- openssl aes-256-cbc -k "$secret" -in .travis/deploy_key.enc -d -a -out deploy.key
-
+  - secure: B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ=
+before_install: 
 before_script:
 - go get -u -v github.com/spf13/hugo
 script:
