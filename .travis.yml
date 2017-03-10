@@ -1,18 +1,24 @@
-language: go
-go:
-- 1.7.1
+language: r
+pandoc_version: 1.17
+cache:
+  packages: yes
+  directories:
+    - $HOME/bin
+
+branches:
+  only:
+    - master
+
 env:
   global:
-  - SSH_KEY="id_rsa"
-  - GIT_NAME="Akira Matsui"
-  - GIT_EMAIL="akira00120@gmail.com"
-  - SOURCE_DIR="public"
-  - DEPLOY_BRANCH="source"
-  - secure: B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ=
-before_install: 
+    - secure: "B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ="
+
 before_script:
-- go get -u -v github.com/spf13/hugo
+  - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
+  - "[ -x \"$HOME/bin/hugo\" ] || Rscript -e \"blogdown::install_hugo()\""
+  - chmod +x ./_build.sh
+  - chmod +x ./_deploy.sh
+
 script:
-- hugo
-after_success:
-- ./scripts/deploy.sh
+  - ./_build.sh
+  - ./_deploy.sh
