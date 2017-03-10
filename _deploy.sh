@@ -4,6 +4,7 @@ set -e
 
 [ -z "${GITHUB_PAT}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "source" ] && exit 0
+git checkout source
 
 git config --global user.email "akira00120@gmail.com"
 git config --global user.name "Akira Matsui "
@@ -13,4 +14,4 @@ cd site-output
 cp -r ../public/* ./
 git add --all *
 git commit -m"Update the site" || true
-git push -q source origin
+git push -q origin master
