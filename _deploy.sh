@@ -8,7 +8,7 @@ set -e
 git config --global user.email "akira00120@gmail.com"
 git config --global user.name "Akira Matsui "
 
-git clone -b source https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git site-output
+git clone -b master https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git site-output
 cd site-output
 cp -r ../public/* ./
 git add --all *
