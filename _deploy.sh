@@ -3,9 +3,6 @@
 set -e
 
 [ -z "${GITHUB_PAT}" ] && exit 0
-git checkout source
-[ "${TRAVIS_BRANCH}" != "source" ] && exit 0
-
 
 git config --global user.email "akira00120@gmail.com"
 git config --global user.name "Akira Matsui "
