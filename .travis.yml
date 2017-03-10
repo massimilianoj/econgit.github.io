@@ -19,7 +19,7 @@ env:
   - secure: B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ=
 
 before_script:
-  #- Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
+  - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - "[ -x \"$HOME/bin/hugo\" ] || Rscript -e \"blogdown::install_hugo()\""
   - chmod +x ./_build.sh
   - chmod +x ./_deploy.sh
