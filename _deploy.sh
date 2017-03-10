@@ -2,11 +2,10 @@
 
 set -e
 
-echo "TEST1"
+
 #[ -z "${GITHUB_PAT}" ] && exit 0
-echo "TEST2"
 echo ${TRAVIS_BRANCH}
-[ "${TRAVIS_BRANCH}" != "master" ] && exit 0
+#[ "${TRAVIS_BRANCH}" != "master" ] && exit 0
 
 
 git config --global user.email "akira00120@gmail.com"
