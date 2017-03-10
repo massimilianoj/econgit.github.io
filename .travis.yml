@@ -7,11 +7,16 @@ cache:
 
 branches:
   only:
-    - master
+    - source
 
 env:
   global:
-    - secure: "B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ="
+  - SSH_KEY="id_rsa"
+  - GIT_NAME="Akira Matsui"
+  - GIT_EMAIL="akira00120@gmail.com"
+  - SOURCE_DIR="public"
+  - DEPLOY_BRANCH="source"
+  - secure: B+UcXi5E08xWCeO58vLY9ws0RJCcbuEn3klfN1+tCYJ89cvqEm3Qlj8+BGflcqWSHSb+KGCqaZGAS0gtKBW/Lzy6zHsObrT+X2MozNTRqf3y1SrSxoyEXxG6N9O9ToLSeqJ7q13Jkwnq4RPWpdXatXemecig1gcjd1D/yQHotLQ=
 
 before_script:
   #- Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
