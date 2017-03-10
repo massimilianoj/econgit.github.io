@@ -6,7 +6,7 @@ set -e
 #[ -z "${GITHUB_PAT}" ] && exit 0
 
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
-
+echo  TEST
 
 git config --global user.email "akira00120@gmail.com"
 git config --global user.name "Akira Matsui "
