@@ -3,6 +3,7 @@
 set -e
 
 [ -z "${GITHUB_PAT}" ] && exit 0
+echo "TEST"
 echo ${TRAVIS_BRANCH}
 [ "${TRAVIS_BRANCH}" != "master" ] && exit 0
 
