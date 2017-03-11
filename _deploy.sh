@@ -2,6 +2,7 @@
 
 set -e
 
+echo "Github Pat is ${GITHUB_PAT}"
 [ -z "${GITHUB_PAT}" ] && exit 0
 [ "${TRAVIS_BRANCH}" != "source" ] && exit 0
 
