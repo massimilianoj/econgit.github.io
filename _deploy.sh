@@ -1,8 +1,8 @@
 #!/bin/sh
 
 set -e
-
-
+echo ${TRAVIS_BRANCH}
+echo "TEST0"
 [ -z "${GITHUB_PAT}" ] && exit 0
 echo "TEST1"
 [ "${TRAVIS_BRANCH}" != "source" ] && exit 0
