@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:svg="http://www.w3.org/2000/svg" id="svg2" viewBox="0 0 610 610" version="1.1">
+  <g id="layer2">
+    <g id="g4491">
+      <path id="path5587-5" d="m344.16 61.844-6.6875 37.531c-14.158-2.7108-28.7-4.1562-43.656-4.1562-128.36 0-232.38 104.01-232.38 232.38 0.008 128.36 104.02 232.4 232.38 232.4s232.41-104.04 232.41-232.41c0-63.894-25.869-121.52-67.594-163.5l-39.69 27.16c36.82 33.826 59.875 82.392 59.875 136.34 0 102.19-82.808 185.03-185 185.03s-185-82.84-185-185.03 82.809-185 185-185c12.079 0 23.925 1.1589 35.344 3.375l-7.5 43.625 61-21.906 60.84-22.3-49.38-42.07-49.96-41.466z" fill="#250"/>
+      <path id="rect3990" d="m181.03 266.91v199.54h58.967v-170.74c-20.649-10.183-52.639-25.927-58.967-28.807z" fill="#94c207"/>
+      <path id="rect3992" d="m315.13 263.21c-19.607 13.981-38.987 28.279-58.52 42.365l-0.24255 160.88h58.967v-203.24z" fill="#94c207"/>
+      <path id="rect3994" d="m331.7 251.27v214.8h58.011l0.29303-255.22c-30.377 21.214-37.52 26.118-58.304 40.424z" fill="#94c207"/>
+    </g>
+  </g>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <cc:license rdf:resource="http://creativecommons.org/licenses/publicdomain/"/>
+        <dc:publisher>
+          <cc:Agent rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>eco green growth icon</dc:title>
+        <dc:date>2013-09-21T19:18:52</dc:date>
+        <dc:description/>
+        <dc:source>http://openclipart.org/detail/183644/eco-green-growth-icon-by-dominiquechappard-183644</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>dominiquechappard</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>ecology</rdf:li>
+            <rdf:li>economy</rdf:li>
+            <rdf:li>green</rdf:li>
+            <rdf:li>growth</rdf:li>
+            <rdf:li>icon</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+        <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
