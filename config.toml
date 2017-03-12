@@ -1,36 +1,70 @@
-baseurl = "/"
+baseurl = "https://econgit.github.io/"
 relativeurls = true
 languageCode = "en-us"
-title = "Lithium Theme"
+title = "econgit"
 theme = "hugo-lithium-theme"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
-[permalinks]
-    post = "/:year/:month/:day/:slug/"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
 
-[[menu.main]]
-    name = "About"
-    url = "/about/"
-[[menu.main]]
-    name = "GitHub"
-    url = "https://github.com/econgit"
-[[menu.main]]
-    name = "Twitter"
-    url = ""
+[permalinks]
+    post = "/post/:year/:month/:slug/"
 
 [params]
-    description = "A website built through Hugo and blogdown."
+    description = "Learn economics online!"
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.9.0"
     highlightjsLang = ["r", "yaml"]
     highlightjsTheme = "github"
+  
+    # CSS
+    customCSS = ["css/custom.css"]
 
     [params.logo]
-    url = "logo.png"
+    url = "eco_green_growth_2.svg"
     width = 50
     height = 50
     alt = "Logo"
 
+
+
+[languages]
+[languages.ja]
+weight = 0
+languageName = "日本語"
+languageCode = "ja-jp"
+[languages.en]
+weight = 10
+languageName = "English"
+languageCode = "en-us"
+
+
+[[languages.ja.menu.main]]
+  url    = "/ja/"
+  name   = "Home"
+  weight = 1
+[[languages.ja.menu.main]]
+  name = "About"
+  url = "/ja/about/"
+  weight = 2
+[[languages.ja.menu.main]]
+  name = "GitHub"
+  url = "https://github.com/econgit"
+  weight = 3
+
+[[languages.en.menu.main]]
+  url    = "/en/"
+  name   = "Home"
+  weight = 1
+[[languages.en.menu.main]]
+  name = "About"
+  url = "/en/about/"
+  weight = 2
+[[languages.en.menu.main]]
+  name = "GitHub"
+  url = "https://github.com/econgit"
+  weight = 3
