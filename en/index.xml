@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>econgit</title>
+    <link>https://econgit.github.io/en/index.xml</link>
+    <description>Recent content on econgit</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://econgit.github.io/en/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Beginning</title>
+      <link>https://econgit.github.io/en/post/2017/03/beginning/</link>
+      <pubDate>Sat, 11 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://econgit.github.io/en/post/2017/03/beginning/</guid>
+      <description>&lt;p&gt;In the beginning the Word already existed. The Word was with Econ, and the Word was Git.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>SAMPLE</title>
+      <link>https://econgit.github.io/en/post/2017/02/sample/</link>
+      <pubDate>Fri, 17 Feb 2017 13:45:42 +0900</pubDate>
+      
+      <guid>https://econgit.github.io/en/post/2017/02/sample/</guid>
+      <description>&lt;p&gt;This is a sample post.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://econgit.github.io/en/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://econgit.github.io/en/about/</guid>
+      <description>&lt;p&gt;This is econgit website.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
