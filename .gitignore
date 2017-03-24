@@ -2,9 +2,10 @@
 .RData
 .Ruserdata
 .Rproj.user
-blogdown
-node_modules/
-public
-themes/**
+
+/public/*
+/blogdown/*
+/content/post/*.html
+/static/post
+
 .DS_Store
-data/**
