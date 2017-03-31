@@ -1,13 +1,11 @@
 ---
 title: "良いコードを書くために気をつけること"
-author: "Akira MATSUI"
-date: "March 31, 2017"
+author: "Akira Matsui"
+date: "2017-03-31"
 output: html_document
 ---
 
-
 # はじめに
-
 
 何かを学ぶ場合、最初は基礎から入るのが普通だ。つまり、その学ぶ事柄に関する動き構成するいくつかの要素の型を身につける。例えば、私が最初に水泳を習ったのは幼稚園の時だが、幼稚園にいる間の殆どの水泳の時間をキックの練習に使った。プールの縁に座って水を蹴ったり、ビート板を抱えて足の動きだけで前に進んだりするのだ。僕達が必死で足を動かしているあいだ、水泳の先生は生徒の足を持って足の動かし型を矯正していく。
 
@@ -44,9 +42,9 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- A <-  as.integer( runif(5, min = 1, max = 99) )
+ A <-  sample(1:99, 5)
 
- for(i in 1:5){
+ for (i in 1:5) {
   print(A[i]) 
  }
 ```
@@ -63,10 +61,9 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
  
- A <-  as.integer( runif(5, min = 1, max = 99) )
- rundom_array_length <- length(A)
- 
- for(i in 1:rundom_array_length){
+ A <-  sample(1:99, 5)
+
+ for (i in seq_along(A)) {
   print(A[i]) 
  }
 ```
@@ -82,19 +79,18 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- A <-  as.integer( runif(5, min = 1, max = 99) )
- rundom_array_length <- length(A)
- B <- array(rundom_array_length)
+ A <-  sample(1:99, 5)
+ B <- array(seq_along(A))
  alpha <- 2
  beta <- 3
  
- for(i in 1:rundom_array_length){
-  B[i] <- A[i]*alpha
+ for (i in seq_along(A)) {
+  B[i] <- A[i] * alpha
  }
   print(B)
 
- for(i in 1:rundom_array_length){
-  B[i] <- A[i]*beta
+ for (i in seq_along(A)) {
+  B[i] <- A[i] * beta
  }
   print(B)
 
@@ -107,15 +103,13 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 
 ```{r}
-
  
  parameter <- c(2, 3)
  
- for( p in parameter){
+ for ( p in parameter) {
   A <-  as.integer( runif(5, min = 1, max = 99) )
-  print(A*p)
+  print(A * p)
  }
- 
  
 ```
 とすれば、わかりやすいコードになる。
@@ -131,12 +125,10 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 ```{r}
 
  Multiple_RundomArray_by  <- function(parameters){
- 
-  for( p in parameters){
+  for (p in parameters) {
     A <- as.integer( runif(5, min = 1, max = 99) )
-    print(A*p)
+    print(A * p)
   }
-   
  }
 ```
 
@@ -145,7 +137,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- parameters <- c(1:5)
+ parameters <- 1:5
  Multiple_RundomArray_by (parameters)
 
 ```
@@ -173,14 +165,12 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
  A <- c(1:5)
 
  Multiple_Array_by <- function(parameters){
- 
-  for( p in parameters){
-    print(A*p)
+  for ( p in parameters) {
+    print(A * p)
   }
-   
  }
- 
- parameters <- c(1:5)
+
+ parameters <- 1:5
  Multiple_Array_by (parameters)
  
 ```
@@ -196,7 +186,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```
 
-これは、先の結果と異なっている。その原因は、配列 `A` を書き換えたからである。さて、問題は *上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうか* という点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 `A` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分では配列 `A` に関数記述がないからである。
+これは、先の結果と異なっている。その原因は、配列 `A` を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 `A` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分では配列 `A` に関数記述がないからである。
 
 今回の場合は、`A`　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧に配列には `A` という誰でも思いつきそうな名前が付けらている。
 
@@ -207,14 +197,10 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- 
-
  f <- function(p){
-  
   for( x in p){
-    print(c(1:5)*x)
+    print(c(1:5) * x)
   }
-   
  }
  
  p <- c(1:5)
@@ -229,16 +215,14 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
  
 
- Multiple_Array_by <- function(parameters){
- 
+ multiple_array_by <- function(parameters){
   for( p in parameters){
-    print(c(1:5)*p)
+    print(c(1:5) * p)
   }
-   
  }
  
  parameters <- c(1:5)
- Multiple_Array_by (parameters)
+ multiple_array_by (parameters)
  
 ```
 
@@ -248,7 +232,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 ## まとめ
 
 
-自分もプログラムに関しては勉強し始めて日が浅いので、学ぶことが多い。*なぜプログラミングを書く必要があるのか*という問に対する答えは沢山ある。研究で使うためという人もいるし、再現性を確保するためと考えている人もどうやらいるようだ。
+自分もプログラムに関しては勉強し始めて日が浅いので、学ぶことが多い。なぜプログラミングを書く必要があるのか? という問に対する答えは沢山ある。研究で使うためという人もいるし、再現性を確保するためと考えている人もどうやらいるようだ。
 
 各理由に関わらず、１つ言えることは書かれたプログラムは他人が読み返すことが多いということである。論文を出版したり、教科書を書いたりした著者がコードを公開することは一般的である。コードを公開しなくても、査読のプロセスで査読者から求められたりすることもあれば[^7]、共著者や指導教授に要求されることもあるだろう。たとえこれらに当てはまらなかってたとしても、一年後の自分は他人であるプログラムを書いた時のことはすっかり忘れてしまっているだろう。
 
@@ -265,6 +249,3 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 [^8]: Rであれば`#` の後はコメントとなってプログラムにコメントをかける。
 [^9]: これは個人的な体験にもとｐづいているわけではなく、一般論である。
 [^10]: We Love Typing でWLTの気がするのだが、DRYと対応させたのだろうか。
-
-
-
