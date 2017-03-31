@@ -45,11 +45,11 @@
  for (i in 1:5) {
   print(A[i]) 
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 3
-## [1] 58
-## [1] 94
-## [1] 79
-## [1] 40&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 83
+## [1] 78
+## [1] 75
+## [1] 2
+## [1] 72&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの &lt;code&gt;for(i in 1:5)&lt;/code&gt; の &lt;code&gt;5&lt;/code&gt; の部分である。最初に配列 &lt;code&gt;A&lt;/code&gt; を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;この &lt;code&gt;5&lt;/code&gt; がどのような意味を持つ数字なのか&lt;/li&gt;
@@ -61,11 +61,11 @@
  for (i in seq_along(A)) {
   print(A[i]) 
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 84
-## [1] 51
-## [1] 23
-## [1] 2
-## [1] 44&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 34
+## [1] 98
+## [1] 15
+## [1] 66
+## [1] 84&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;-dry-dont-repeat-yourself&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/h3&gt;
@@ -80,12 +80,12 @@
   B[i] &amp;lt;- A[i] * alpha
  }
   print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  70  64 150  12  34&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 130 116 102 164  94&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; for (i in seq_along(A)) {
   B[i] &amp;lt;- A[i] * beta
  }
   print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 105  96 225  18  51&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 195 174 153 246 141&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;わざわざからの配列 &lt;code&gt;B&lt;/code&gt; を定義する必要はなさそうという他に、 &lt;code&gt;for&lt;/code&gt; ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。&lt;/p&gt;
 &lt;p&gt;例えば、&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameter &amp;lt;- c(2, 3)
@@ -94,8 +94,8 @@
   A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
   print(A * p)
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 132 160 104   2 186
-## [1]  12 258 267 153 186&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  66 182 138 186 190
+## [1] 114 150 288 186 153&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;とすれば、わかりやすいコードになる。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
@@ -110,11 +110,11 @@
 &lt;p&gt;としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameters &amp;lt;- 1:5
  Multiple_RundomArray_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  2 82 22 53 52
-## [1] 160 170  58  80  64
-## [1] 291  36 231 189 117
-## [1] 360 384 160 196  92
-## [1] 190 485  20 130 255&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 23 33 57 96 15
+## [1]  68  64 180 148  92
+## [1] 108 156  87  90 171
+## [1] 240 364 132 376 136
+## [1]   5  70 165  35 335&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;となる&lt;a href=&#34;#fn7&#34; class=&#34;footnoteRef&#34; id=&#34;fnref7&#34;&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
