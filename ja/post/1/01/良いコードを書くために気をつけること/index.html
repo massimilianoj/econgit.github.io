@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja-jp">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.19" />
+
+
+<title>良いコードを書くために気をつけること - econgit</title>
+<meta property="og:title" content="良いコードを書くために気をつけること - econgit">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css' rel='stylesheet' type='text/css'>
+
+
+
+<link rel="stylesheet" href="https://econgit.github.io/css/fonts.css" media="all">
+<link rel="stylesheet" href="https://econgit.github.io/css/main.css" media="all">
+
+<link rel="stylesheet" href="https://econgit.github.io/css/custom.css">
+
+<link rel="shortcut icon" type="image/svg+xml" sizes="any" href="https://econgit.github.io/images/eco_green_growth_2.svg" />
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="https://econgit.github.io/" class="nav-logo">
+    <img src="https://econgit.github.io/images/eco_green_growth_2.svg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+  <ul class="nav-links"><li class="">
+        <a href="../../../../../ja/">Home</a>
+    </li><li class="">
+        <a href="../../../../../ja/about/">About</a>
+    </li><li class="">
+        <a href="https://github.com/econgit">GitHub</a>
+    </li>
+    
+  </ul>
+</nav>
+
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">良いコードを書くために気をつけること</h1>
+
+    
+    <span class="article-date">January 1, 0001</span>
+    
+    
+    
+
+
+
+    <div class="article-content">
+      <!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
+<div class="section level1">
+<h1>はじめに</h1>
+<p>何かを学ぶ場合、最初は基礎から入るのが普通だ。つまり、その学ぶ事柄に関する動き構成するいくつかの要素の型を身につける。例えば、私が最初に水泳を習ったのは幼稚園の時だが、幼稚園にいる間の殆どの水泳の時間をキックの練習に使った。プールの縁に座って水を蹴ったり、ビート板を抱えて足の動きだけで前に進んだりするのだ。僕達が必死で足を動かしているあいだ、水泳の先生は生徒の足を持って足の動かし型を矯正していく。</p>
+<p>なぜ、このようなカリキュラムになっているかというと、代表的な４つの泳法(背泳ぎ・平泳ぎ・バタフライ・クロール)に共通するのが足で水を蹴る動作だからだ。つまり、キックの習熟の良し悪しが泳法全てに影響してしまうのだ。何かを学ぶ時に基本的な動作に悪い癖がついたり、その重要性を認識していないと後々困ったことになる。</p>
+<p>これに関連して、個人的にプログラムの勉強に関してはかなり後悔していることがある。 <code>C++/C</code> を真面目に学ばなかったことではない。コードの書き方（writing style）に無頓着だったのだ。プログラムは書くことより読まれることが多いと言われる <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>。つまり、可読性（readability）を意識する必要がある。乱雑・非統一的・冗長なコードは有益なものになりにくい。</p>
+<p>プログラミングをゼミで勉強したとき、このことの重要性をまったく認識していなかった。もしかして、誰かに言われたり、<a href="http://amzn.asia/aG918TV">そういう本</a>が出ているのを知っていたのかもしれない。多分、「はいはい、なるほどね」ぐらいで適当に流していたのだろう。普通の文章は、他人が読むことを意識して書くことが多いという事実を考えれば想像できそうなものなのだが。</p>
+<p>良いコードを書く方法について勉強し始めたばかりなのだが<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>、いくつか勉強したことがあるのでここにメモしていきたいと思う。具体的には、QuantEconの中の1章の<a href="https://lectures.quantecon.org/py/writing_good_code.html">Writing Good Code</a>と<a href="https://www.kenjisato.jp">Kenji Sato</a>さんから頂いた指摘、そしてRに関しては<a href="http://adv-r.had.co.nz/Style.html">Advanced RのStyle guide</a>を参考に記事を作成した。守るべき原則を良くないコードの例を示して修正する形で記事をすすめていきたい。</p>
+<div class="section level2">
+<h2>守るべき原則</h2>
+<p>QuantEconの中の<a href="https://lectures.quantecon.org/py/writing_good_code.html">Writing Good Code</a>では、良いコードを書くために守るべき教義が挙げられている。それは、</p>
+<ul>
+<li>マジックナンバーを使うべからず</li>
+<li>繰り返すべからず (DRY: Don’t repeat yourself)</li>
+<li>関数・クラスを使え</li>
+<li>グローバル変数を使うべからず</li>
+</ul>
+<p>である。この４つを一つずつ説明していこう。</p>
+<div class="section level3">
+<h3>マジックナンバーを使うべからず</h3>
+<p>ここでいうマジックナンバーとは、具体的な数字のことである<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>。例えば以下のコードを見てみよう。</p>
+<pre class="r"><code> A &lt;-  as.integer( runif(5, min = 1, max = 99) )
+
+ for(i in 1:5){
+  print(A[i]) 
+ }</code></pre>
+<pre><code>## [1] 77
+## [1] 40
+## [1] 56
+## [1] 44
+## [1] 1</code></pre>
+<p>出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの <code>for(i in 1:5)</code> の <code>5</code> の部分である。最初に配列 <code>A</code> を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、</p>
+<ul>
+<li>この <code>5</code> がどのような意味を持つ数字なのか</li>
+<li>配列の長さが、例えば <code>100</code> に変わった時、<code>for</code> の中身も変更しなくてはいけない</li>
+</ul>
+<p>という２点の問題がすぐに挙げられる<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>。以下のように書き換えると読みやすくなる。</p>
+<pre class="r"><code> A &lt;-  as.integer( runif(5, min = 1, max = 99) )
+ rundom_array_length &lt;- length(A)
+ 
+ for(i in 1:rundom_array_length){
+  print(A[i]) 
+ }</code></pre>
+<pre><code>## [1] 91
+## [1] 79
+## [1] 87
+## [1] 45
+## [1] 30</code></pre>
+</div>
+<div id="-dry-dont-repeat-yourself" class="section level3">
+<h3>繰り返すべからず (DRY: Don’t repeat yourself)</h3>
+<p>繰り返すべからず、というのは奇妙に聞こえるかもしれない。プログラムは <code>for</code> や <code>while</code> といった繰り返し処理が得意だからである。もちろん、ここで言う、繰り返すべからず (以下、DRY)とは冗長（repepetive）なコードを避けよということである。これの反意語として、WET (We love typing)<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> がある。</p>
+<p>例えば、以下のようなコードについてあなたはどのような感想を抱くだろうか？</p>
+<pre class="r"><code> A &lt;-  as.integer( runif(5, min = 1, max = 99) )
+ rundom_array_length &lt;- length(A)
+ B &lt;- array(rundom_array_length)
+ alpha &lt;- 2
+ beta &lt;- 3
+ 
+ for(i in 1:rundom_array_length){
+  B[i] &lt;- A[i]*alpha
+ }
+  print(B)</code></pre>
+<pre><code>## [1] 104 172  94   2 148</code></pre>
+<pre class="r"><code> for(i in 1:rundom_array_length){
+  B[i] &lt;- A[i]*beta
+ }
+  print(B)</code></pre>
+<pre><code>## [1] 156 258 141   3 222</code></pre>
+<p>わざわざからの配列 <code>B</code> を定義する必要はなさそうという他に、 <code>for</code> ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。</p>
+<p>例えば、</p>
+<pre class="r"><code> parameter &lt;- c(2, 3)
+ 
+ for( p in parameter){
+  A &lt;-  as.integer( runif(5, min = 1, max = 99) )
+  print(A*p)
+ }</code></pre>
+<pre><code>## [1] 124 184 122 100 106
+## [1] 249 129 249   9  51</code></pre>
+<p>とすれば、わかりやすいコードになる。</p>
+</div>
+<div class="section level3">
+<h3>関数・クラスを使え</h3>
+<p>関数やクラスを使わなくても<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>先のコードの無駄な記述を減らすことはできる。しかし、一般的に関数やクラスを定義すると同じ機能を何度も呼び出すことができるので便利だし、記述も少なくてすむ。先のコードを例にすると、</p>
+<pre class="r"><code> Multiple_RundomArray_by  &lt;- function(parameters){
+ 
+  for( p in parameters){
+    A &lt;- as.integer( runif(5, min = 1, max = 99) )
+    print(A*p)
+  }
+   
+ }</code></pre>
+<p>としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、</p>
+<pre class="r"><code> parameters &lt;- c(1:5)
+ Multiple_RundomArray_by (parameters)</code></pre>
+<pre><code>## [1] 54 89 10 58 65
+## [1]   8 160  84 192   8
+## [1] 213  51 222 243  54
+## [1] 148 372 192 260 188
+## [1] 375 415  50 425 235</code></pre>
+<p>となる<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>。</p>
+</div>
+<div class="section level3">
+<h3>グローバル変数を使うべからず</h3>
+<p>グローバル変数は便利なので、使いがちであるが、グローバル変数は危険な代物である。グローバル変数とは関数やクラスの外で定義する変数のことである。</p>
+<p>なぜグローバル変数が危険かというと、</p>
+<ul>
+<li>プログラムのどの部分にも影響を及ぼし(→　変数が影響を与える範囲を制限できない)</li>
+<li>どんな関数においてでも変更されやすい(→ いつ変数が変更されうる場所を特定できない)</li>
+</ul>
+<p>からである。つまり、コードのある部分が実際にどの範囲に影響をもたらしているかを特定することが困難になる危険性が発生してしまう。</p>
+<p>具体例で見てみよう、先の関数と同じようなコード</p>
+<pre class="r"><code> A &lt;- c(1:5)
+
+ Multiple_Array_by &lt;- function(parameters){
+ 
+  for( p in parameters){
+    print(A*p)
+  }
+   
+ }
+ 
+ parameters &lt;- c(1:5)
+ Multiple_Array_by (parameters)</code></pre>
+<pre><code>## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25</code></pre>
+<p>をみてみよう。このコードで配列 <code>A</code> は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？</p>
+<pre class="r"><code> A &lt;- c(5:1)
+ parameters &lt;- c(1:5)
+ Multiple_Array_by (parameters)</code></pre>
+<pre><code>## [1] 5 4 3 2 1
+## [1] 10  8  6  4  2
+## [1] 15 12  9  6  3
+## [1] 20 16 12  8  4
+## [1] 25 20 15 10  5</code></pre>
+<p>これは、先の結果と異なっている。その原因は、配列 <code>A</code> を書き換えたからである。さて、問題は <em>上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうか</em> という点である。たとえば、 <code>parameters</code> の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 <code>parameters</code> が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 <code>A</code> がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 <code>Multiple_Array_by (parameters)</code> 　という記述部分では配列 <code>A</code> に関数記述がないからである。</p>
+<p>今回の場合は、<code>A</code>　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧に配列には <code>A</code> という誰でも思いつきそうな名前が付けらている。</p>
+</div>
+<div class="section level3">
+<h3>名前について</h3>
+<p>これは、教義の中に入っていないのだが、変数や関数の名前はできるだけ意味のあるものの方がよい。たとえば、</p>
+<pre class="r"><code> f &lt;- function(p){
+  
+  for( x in p){
+    print(c(1:5)*x)
+  }
+   
+ }
+ 
+ p &lt;- c(1:5)
+ f(p)</code></pre>
+<pre><code>## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25</code></pre>
+<p>というなんの情報もない関数名や変数よりも、</p>
+<pre class="r"><code> Multiple_Array_by &lt;- function(parameters){
+ 
+  for( p in parameters){
+    print(c(1:5)*p)
+  }
+   
+ }
+ 
+ parameters &lt;- c(1:5)
+ Multiple_Array_by (parameters)</code></pre>
+<pre><code>## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25</code></pre>
+<p>という名前の付け方の方がわかりやすいだろう。</p>
+</div>
+</div>
+<div class="section level2">
+<h2>まとめ</h2>
+<p>自分もプログラムに関しては勉強し始めて日が浅いので、学ぶことが多い。<em>なぜプログラミングを書く必要があるのか</em>という問に対する答えは沢山ある。研究で使うためという人もいるし、再現性を確保するためと考えている人もどうやらいるようだ。</p>
+<p>各理由に関わらず、１つ言えることは書かれたプログラムは他人が読み返すことが多いということである。論文を出版したり、教科書を書いたりした著者がコードを公開することは一般的である。コードを公開しなくても、査読のプロセスで査読者から求められたりすることもあれば<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>、共著者や指導教授に要求されることもあるだろう。たとえこれらに当てはまらなかってたとしても、一年後の自分は他人であるプログラムを書いた時のことはすっかり忘れてしまっているだろう。</p>
+<p>個人的には、良いコーディングを身につけて有益な物を生み出したいと思っている。このポストでは触れなかったが、コードにコメントを付けて説明を加えることも大切である<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a>。コメントの内容も他人が読むことを前提として記述することが大切である。くれぐれも、個人的な感想などを書いてはいけない<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a>。</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>出典不明<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>記事を書く一週間前<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>マジックナンバーという用語は他の意味で使われることもある。例えば、人間は3つ列挙されると理解やされやすいという意味でマジックナンバー3と呼ばれることがあり、スティーブ・ジョブズは好んで自身のプレゼンで3という数字に<a href="http://news.mynavi.jp/articles/2015/03/01/sj/">こだわった</a>と言われている。<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>他にも、配列の <code>A</code> というネーミングも問題なのだがここでは無視する。<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>We Love Typing でWLTの気がするのだが、DRYと対応させたのだろうか。<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>Rでもクラスを定義して使用することができるようだが、筆者は未体験である。<a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p>ここまで来てお気付きの読者もいるかもしれないが、このプログラム、全くの無意味である。あくまで、説明のために使った。<a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p>あくまで伝聞である。筆者の体験ではない。<a href="#fnref8">↩</a></p></li>
+<li id="fn9"><p>Rであれば<code>#</code> の後はコメントとなってプログラムにコメントをかける。<a href="#fnref9">↩</a></p></li>
+<li id="fn10"><p>これは個人的な体験にもとｐづいているわけではなく、一般論である。<a href="#fnref10">↩</a></p></li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="https://econgit.github.io/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="https://econgit.github.io/images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
