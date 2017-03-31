@@ -106,11 +106,11 @@
  for (i in 1:5) {
   print(A[i]) 
  }</code></pre>
-<pre><code>## [1] 59
-## [1] 83
-## [1] 16
-## [1] 43
-## [1] 88</code></pre>
+<pre><code>## [1] 3
+## [1] 58
+## [1] 94
+## [1] 79
+## [1] 40</code></pre>
 <p>出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの <code>for(i in 1:5)</code> の <code>5</code> の部分である。最初に配列 <code>A</code> を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、</p>
 <ul>
 <li>この <code>5</code> がどのような意味を持つ数字なのか</li>
@@ -122,11 +122,11 @@
  for (i in seq_along(A)) {
   print(A[i]) 
  }</code></pre>
-<pre><code>## [1] 47
-## [1] 71
-## [1] 1
-## [1] 16
-## [1] 92</code></pre>
+<pre><code>## [1] 84
+## [1] 51
+## [1] 23
+## [1] 2
+## [1] 44</code></pre>
 </div>
 <div id="-dry-dont-repeat-yourself" class="section level3">
 <h3>繰り返すべからず (DRY: Don’t repeat yourself)</h3>
@@ -141,12 +141,12 @@
   B[i] &lt;- A[i] * alpha
  }
   print(B)</code></pre>
-<pre><code>## [1] 148 192 176  86  64</code></pre>
+<pre><code>## [1]  70  64 150  12  34</code></pre>
 <pre class="r"><code> for (i in seq_along(A)) {
   B[i] &lt;- A[i] * beta
  }
   print(B)</code></pre>
-<pre><code>## [1] 222 288 264 129  96</code></pre>
+<pre><code>## [1] 105  96 225  18  51</code></pre>
 <p>わざわざからの配列 <code>B</code> を定義する必要はなさそうという他に、 <code>for</code> ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。</p>
 <p>例えば、</p>
 <pre class="r"><code> parameter &lt;- c(2, 3)
@@ -155,8 +155,8 @@
   A &lt;-  as.integer( runif(5, min = 1, max = 99) )
   print(A * p)
  }</code></pre>
-<pre><code>## [1]  44 100  14 182  64
-## [1] 210 105 111 234  45</code></pre>
+<pre><code>## [1] 132 160 104   2 186
+## [1]  12 258 267 153 186</code></pre>
 <p>とすれば、わかりやすいコードになる。</p>
 </div>
 <div class="section level3">
@@ -171,11 +171,11 @@
 <p>としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、</p>
 <pre class="r"><code> parameters &lt;- 1:5
  Multiple_RundomArray_by (parameters)</code></pre>
-<pre><code>## [1] 36 54 86 21 10
-## [1]  94  82  46 178 180
-## [1]  90  27 195 141   3
-## [1]  68   8 328 244 128
-## [1] 160 135 245 450 120</code></pre>
+<pre><code>## [1]  2 82 22 53 52
+## [1] 160 170  58  80  64
+## [1] 291  36 231 189 117
+## [1] 360 384 160 196  92
+## [1] 190 485  20 130 255</code></pre>
 <p>となる<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>。</p>
 </div>
 <div class="section level3">
