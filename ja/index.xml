@@ -6,8 +6,211 @@
     <description>Recent content on econgit</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Fri, 24 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Mar 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://econgit.github.io/ja/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>良いコードを書くために気をつけること</title>
+      <link>https://econgit.github.io/ja/post/2017/03/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</link>
+      <pubDate>Fri, 31 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://econgit.github.io/ja/post/2017/03/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</guid>
+      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
+&lt;!-- /BLOGDOWN-HEAD --&gt;
+
+&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
+&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
+&lt;div class=&#34;section level1&#34;&gt;
+&lt;h1&gt;はじめに&lt;/h1&gt;
+&lt;p&gt;何かを学ぶ場合、最初は基礎から入るのが普通だ。つまり、その学ぶ事柄に関する動き構成するいくつかの要素の型を身につける。例えば、私が最初に水泳を習ったのは幼稚園の時だが、幼稚園にいる間の殆どの水泳の時間をキックの練習に使った。プールの縁に座って水を蹴ったり、ビート板を抱えて足の動きだけで前に進んだりするのだ。僕達が必死で足を動かしているあいだ、水泳の先生は生徒の足を持って足の動かし型を矯正していく。&lt;/p&gt;
+&lt;p&gt;なぜ、このようなカリキュラムになっているかというと、代表的な４つの泳法(背泳ぎ・平泳ぎ・バタフライ・クロール)に共通するのが足で水を蹴る動作だからだ。つまり、キックの習熟の良し悪しが泳法全てに影響してしまうのだ。何かを学ぶ時に基本的な動作に悪い癖がついたり、その重要性を認識していないと後々困ったことになる。&lt;/p&gt;
+&lt;p&gt;これに関連して、個人的にプログラムの勉強に関してはかなり後悔していることがある。 &lt;code&gt;C++/C&lt;/code&gt; を真面目に学ばなかったことではない。コードの書き方（writing style）に無頓着だったのだ。プログラムは書くことより読まれることが多いと言われる &lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;。つまり、可読性（readability）を意識する必要がある。乱雑・非統一的・冗長なコードは有益なものになりにくい。&lt;/p&gt;
+&lt;p&gt;プログラミングをゼミで勉強したとき、このことの重要性をまったく認識していなかった。もしかして、誰かに言われたり、&lt;a href=&#34;http://amzn.asia/aG918TV&#34;&gt;そういう本&lt;/a&gt;が出ているのを知っていたのかもしれない。多分、「はいはい、なるほどね」ぐらいで適当に流していたのだろう。普通の文章は、他人が読むことを意識して書くことが多いという事実を考えれば想像できそうなものなのだが。&lt;/p&gt;
+&lt;p&gt;良いコードを書く方法について勉強し始めたばかりなのだが&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;、いくつか勉強したことがあるのでここにメモしていきたいと思う。具体的には、QuantEconの中の1章の&lt;a href=&#34;https://lectures.quantecon.org/py/writing_good_code.html&#34;&gt;Writing Good Code&lt;/a&gt;と&lt;a href=&#34;https://www.kenjisato.jp&#34;&gt;Kenji Sato&lt;/a&gt;さんから頂いた指摘、そしてRに関しては&lt;a href=&#34;http://adv-r.had.co.nz/Style.html&#34;&gt;Advanced RのStyle guide&lt;/a&gt;を参考に記事を作成した。守るべき原則を良くないコードの例を示して修正する形で記事をすすめていきたい。&lt;/p&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;守るべき原則&lt;/h2&gt;
+&lt;p&gt;QuantEconの中の&lt;a href=&#34;https://lectures.quantecon.org/py/writing_good_code.html&#34;&gt;Writing Good Code&lt;/a&gt;では、良いコードを書くために守るべき教義が挙げられている。それは、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;マジックナンバーを使うべからず&lt;/li&gt;
+&lt;li&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/li&gt;
+&lt;li&gt;関数・クラスを使え&lt;/li&gt;
+&lt;li&gt;グローバル変数を使うべからず&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;である。この４つを一つずつ説明していこう。&lt;/p&gt;
+&lt;div class=&#34;section level3&#34;&gt;
+&lt;h3&gt;マジックナンバーを使うべからず&lt;/h3&gt;
+&lt;p&gt;ここでいうマジックナンバーとは、具体的な数字のことである&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;。例えば以下のコードを見てみよう。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  sample(1:99, 5)
+
+ for (i in 1:5) {
+  print(A[i]) 
+ }&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 86
+## [1] 18
+## [1] 55
+## [1] 22
+## [1] 59&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの &lt;code&gt;for(i in 1:5)&lt;/code&gt; の &lt;code&gt;5&lt;/code&gt; の部分である。最初に配列 &lt;code&gt;A&lt;/code&gt; を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;この &lt;code&gt;5&lt;/code&gt; がどのような意味を持つ数字なのか&lt;/li&gt;
+&lt;li&gt;配列の長さが、例えば &lt;code&gt;100&lt;/code&gt; に変わった時、&lt;code&gt;for&lt;/code&gt; の中身も変更しなくてはいけない&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;という２点の問題がすぐに挙げられる&lt;a href=&#34;#fn4&#34; class=&#34;footnoteRef&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;。以下のように書き換えると読みやすくなる。&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  sample(1:99, 5)
+
+ for (i in seq_along(A)) {
+  print(A[i]) 
+ }&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 94
+## [1] 82
+## [1] 38
+## [1] 67
+## [1] 51&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;-dry-dont-repeat-yourself&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/h3&gt;
+&lt;p&gt;繰り返すべからず、というのは奇妙に聞こえるかもしれない。プログラムは &lt;code&gt;for&lt;/code&gt; や &lt;code&gt;while&lt;/code&gt; といった繰り返し処理が得意だからである。もちろん、ここで言う、繰り返すべからず (以下、DRY)とは冗長（repepetive）なコードを避けよということである。これの反意語として、WET (We love typing)&lt;a href=&#34;#fn5&#34; class=&#34;footnoteRef&#34; id=&#34;fnref5&#34;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; がある。&lt;/p&gt;
+&lt;p&gt;例えば、以下のようなコードについてあなたはどのような感想を抱くだろうか？&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  sample(1:99, 5)
+ B &amp;lt;- array(seq_along(A))
+ alpha &amp;lt;- 2
+ beta &amp;lt;- 3
+ 
+ for (i in seq_along(A)) {
+  B[i] &amp;lt;- A[i] * alpha
+ }
+  print(B)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  38 138 120 148 134&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; for (i in seq_along(A)) {
+  B[i] &amp;lt;- A[i] * beta
+ }
+  print(B)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  57 207 180 222 201&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;わざわざからの配列 &lt;code&gt;B&lt;/code&gt; を定義する必要はなさそうという他に、 &lt;code&gt;for&lt;/code&gt; ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。&lt;/p&gt;
+&lt;p&gt;例えば、&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameter &amp;lt;- c(2, 3)
+ 
+ for ( p in parameter) {
+  A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
+  print(A * p)
+ }&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 142 194  38  48  36
+## [1] 195 249  21 129 165&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;とすれば、わかりやすいコードになる。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level3&#34;&gt;
+&lt;h3&gt;関数・クラスを使え&lt;/h3&gt;
+&lt;p&gt;関数やクラスを使わなくても&lt;a href=&#34;#fn6&#34; class=&#34;footnoteRef&#34; id=&#34;fnref6&#34;&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt;先のコードの無駄な記述を減らすことはできる。しかし、一般的に関数やクラスを定義すると同じ機能を何度も呼び出すことができるので便利だし、記述も少なくてすむ。先のコードを例にすると、&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; Multiple_RundomArray_by  &amp;lt;- function(parameters){
+  for (p in parameters) {
+    A &amp;lt;- as.integer( runif(5, min = 1, max = 99) )
+    print(A * p)
+  }
+ }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameters &amp;lt;- 1:5
+ Multiple_RundomArray_by (parameters)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 18 87  6 39 48
+## [1] 100 148 172  32  54
+## [1] 273 132  69 288 231
+## [1] 300 348 228  12 356
+## [1] 460 255 350 205  95&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;となる&lt;a href=&#34;#fn7&#34; class=&#34;footnoteRef&#34; id=&#34;fnref7&#34;&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level3&#34;&gt;
+&lt;h3&gt;グローバル変数を使うべからず&lt;/h3&gt;
+&lt;p&gt;グローバル変数は便利なので、使いがちであるが、グローバル変数は危険な代物である。グローバル変数とは関数やクラスの外で定義する変数のことである。&lt;/p&gt;
+&lt;p&gt;なぜグローバル変数が危険かというと、&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;プログラムのどの部分にも影響を及ぼし(→　変数が影響を与える範囲を制限できない)&lt;/li&gt;
+&lt;li&gt;どんな関数においてでも変更されやすい(→ いつ変数が変更されうる場所を特定できない)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;からである。つまり、コードのある部分が実際にどの範囲に影響をもたらしているかを特定することが困難になる危険性が発生してしまう。&lt;/p&gt;
+&lt;p&gt;具体例で見てみよう、先の関数と同じようなコード&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;- c(1:5)
+
+ Multiple_Array_by &amp;lt;- function(parameters){
+  for ( p in parameters) {
+    print(A * p)
+  }
+ }
+
+ parameters &amp;lt;- 1:5
+ Multiple_Array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;をみてみよう。このコードで配列 &lt;code&gt;A&lt;/code&gt; は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;- c(5:1)
+ parameters &amp;lt;- c(1:5)
+ Multiple_Array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5 4 3 2 1
+## [1] 10  8  6  4  2
+## [1] 15 12  9  6  3
+## [1] 20 16 12  8  4
+## [1] 25 20 15 10  5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;これは、先の結果と異なっている。その原因は、配列 &lt;code&gt;A&lt;/code&gt; を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 &lt;code&gt;parameters&lt;/code&gt; の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 &lt;code&gt;parameters&lt;/code&gt; が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 &lt;code&gt;A&lt;/code&gt; がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 &lt;code&gt;Multiple_Array_by (parameters)&lt;/code&gt; 　という記述部分では配列 &lt;code&gt;A&lt;/code&gt; に関数記述がないからである。&lt;/p&gt;
+&lt;p&gt;今回の場合は、&lt;code&gt;A&lt;/code&gt;　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧に配列には &lt;code&gt;A&lt;/code&gt; という誰でも思いつきそうな名前が付けらている。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level3&#34;&gt;
+&lt;h3&gt;名前について&lt;/h3&gt;
+&lt;p&gt;これは、教義の中に入っていないのだが、変数や関数の名前はできるだけ意味のあるものの方がよい。たとえば、&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; f &amp;lt;- function(p){
+  for( x in p){
+    print(c(1:5) * x)
+  }
+ }
+ 
+ p &amp;lt;- c(1:5)
+ f(p)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;というなんの情報もない関数名や変数よりも、&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; multiple_array_by &amp;lt;- function(parameters){
+  for( p in parameters){
+    print(c(1:5) * p)
+  }
+ }
+ 
+ parameters &amp;lt;- c(1:5)
+ multiple_array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
+## [1]  2  4  6  8 10
+## [1]  3  6  9 12 15
+## [1]  4  8 12 16 20
+## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;という名前の付け方の方がわかりやすいだろう。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;まとめ&lt;/h2&gt;
+&lt;p&gt;自分もプログラムに関しては勉強し始めて日が浅いので、学ぶことが多い。なぜプログラミングを書く必要があるのか? という問に対する答えは沢山ある。研究で使うためという人もいるし、再現性を確保するためと考えている人もどうやらいるようだ。&lt;/p&gt;
+&lt;p&gt;各理由に関わらず、１つ言えることは書かれたプログラムは他人が読み返すことが多いということである。論文を出版したり、教科書を書いたりした著者がコードを公開することは一般的である。コードを公開しなくても、査読のプロセスで査読者から求められたりすることもあれば&lt;a href=&#34;#fn8&#34; class=&#34;footnoteRef&#34; id=&#34;fnref8&#34;&gt;&lt;sup&gt;8&lt;/sup&gt;&lt;/a&gt;、共著者や指導教授に要求されることもあるだろう。たとえこれらに当てはまらなかってたとしても、一年後の自分は他人であるプログラムを書いた時のことはすっかり忘れてしまっているだろう。&lt;/p&gt;
+&lt;p&gt;個人的には、良いコーディングを身につけて有益な物を生み出したいと思っている。このポストでは触れなかったが、コードにコメントを付けて説明を加えることも大切である&lt;a href=&#34;#fn9&#34; class=&#34;footnoteRef&#34; id=&#34;fnref9&#34;&gt;&lt;sup&gt;9&lt;/sup&gt;&lt;/a&gt;。コメントの内容も他人が読むことを前提として記述することが大切である。くれぐれも、個人的な感想などを書いてはいけない&lt;a href=&#34;#fn10&#34; class=&#34;footnoteRef&#34; id=&#34;fnref10&#34;&gt;&lt;sup&gt;10&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;出典不明&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;記事を書く一週間前&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;マジックナンバーという用語は他の意味で使われることもある。例えば、人間は3つ列挙されると理解やされやすいという意味でマジックナンバー3と呼ばれることがあり、スティーブ・ジョブズは好んで自身のプレゼンで3という数字に&lt;a href=&#34;http://news.mynavi.jp/articles/2015/03/01/sj/&#34;&gt;こだわった&lt;/a&gt;と言われている。&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;他にも、配列の &lt;code&gt;A&lt;/code&gt; というネーミングも問題なのだがここでは無視する。&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn5&#34;&gt;&lt;p&gt;We Love Typing でWLTの気がするのだが、DRYと対応させたのだろうか。&lt;a href=&#34;#fnref5&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn6&#34;&gt;&lt;p&gt;Rでもクラスを定義して使用することができるようだが、筆者は未体験である。&lt;a href=&#34;#fnref6&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn7&#34;&gt;&lt;p&gt;ここまで来てお気付きの読者もいるかもしれないが、このプログラム、全くの無意味である。あくまで、説明のために使った。&lt;a href=&#34;#fnref7&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn8&#34;&gt;&lt;p&gt;あくまで伝聞である。筆者の体験ではない。&lt;a href=&#34;#fnref8&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn9&#34;&gt;&lt;p&gt;Rであれば&lt;code&gt;#&lt;/code&gt; の後はコメントとなってプログラムにコメントをかける。&lt;a href=&#34;#fnref9&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn10&#34;&gt;&lt;p&gt;これは個人的な体験にもとｐづいているわけではなく、一般論である。&lt;a href=&#34;#fnref10&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>なぜプログラムを書くのか</title>
@@ -109,219 +312,6 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
       
       <guid>https://econgit.github.io/ja/about/</guid>
       <description>&lt;p&gt;This is econgit website.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>良いコードを書くために気をつけること</title>
-      <link>https://econgit.github.io/ja/post/1/01/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://econgit.github.io/ja/post/1/01/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</guid>
-      <description>&lt;!-- BLOGDOWN-HEAD --&gt;
-&lt;!-- /BLOGDOWN-HEAD --&gt;
-
-&lt;!-- BLOGDOWN-BODY-BEFORE --&gt;
-&lt;!-- /BLOGDOWN-BODY-BEFORE --&gt;
-&lt;div class=&#34;section level1&#34;&gt;
-&lt;h1&gt;はじめに&lt;/h1&gt;
-&lt;p&gt;何かを学ぶ場合、最初は基礎から入るのが普通だ。つまり、その学ぶ事柄に関する動き構成するいくつかの要素の型を身につける。例えば、私が最初に水泳を習ったのは幼稚園の時だが、幼稚園にいる間の殆どの水泳の時間をキックの練習に使った。プールの縁に座って水を蹴ったり、ビート板を抱えて足の動きだけで前に進んだりするのだ。僕達が必死で足を動かしているあいだ、水泳の先生は生徒の足を持って足の動かし型を矯正していく。&lt;/p&gt;
-&lt;p&gt;なぜ、このようなカリキュラムになっているかというと、代表的な４つの泳法(背泳ぎ・平泳ぎ・バタフライ・クロール)に共通するのが足で水を蹴る動作だからだ。つまり、キックの習熟の良し悪しが泳法全てに影響してしまうのだ。何かを学ぶ時に基本的な動作に悪い癖がついたり、その重要性を認識していないと後々困ったことになる。&lt;/p&gt;
-&lt;p&gt;これに関連して、個人的にプログラムの勉強に関してはかなり後悔していることがある。 &lt;code&gt;C++/C&lt;/code&gt; を真面目に学ばなかったことではない。コードの書き方（writing style）に無頓着だったのだ。プログラムは書くことより読まれることが多いと言われる &lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt;。つまり、可読性（readability）を意識する必要がある。乱雑・非統一的・冗長なコードは有益なものになりにくい。&lt;/p&gt;
-&lt;p&gt;プログラミングをゼミで勉強したとき、このことの重要性をまったく認識していなかった。もしかして、誰かに言われたり、&lt;a href=&#34;http://amzn.asia/aG918TV&#34;&gt;そういう本&lt;/a&gt;が出ているのを知っていたのかもしれない。多分、「はいはい、なるほどね」ぐらいで適当に流していたのだろう。普通の文章は、他人が読むことを意識して書くことが多いという事実を考えれば想像できそうなものなのだが。&lt;/p&gt;
-&lt;p&gt;良いコードを書く方法について勉強し始めたばかりなのだが&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;、いくつか勉強したことがあるのでここにメモしていきたいと思う。具体的には、QuantEconの中の1章の&lt;a href=&#34;https://lectures.quantecon.org/py/writing_good_code.html&#34;&gt;Writing Good Code&lt;/a&gt;と&lt;a href=&#34;https://www.kenjisato.jp&#34;&gt;Kenji Sato&lt;/a&gt;さんから頂いた指摘、そしてRに関しては&lt;a href=&#34;http://adv-r.had.co.nz/Style.html&#34;&gt;Advanced RのStyle guide&lt;/a&gt;を参考に記事を作成した。守るべき原則を良くないコードの例を示して修正する形で記事をすすめていきたい。&lt;/p&gt;
-&lt;div class=&#34;section level2&#34;&gt;
-&lt;h2&gt;守るべき原則&lt;/h2&gt;
-&lt;p&gt;QuantEconの中の&lt;a href=&#34;https://lectures.quantecon.org/py/writing_good_code.html&#34;&gt;Writing Good Code&lt;/a&gt;では、良いコードを書くために守るべき教義が挙げられている。それは、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;マジックナンバーを使うべからず&lt;/li&gt;
-&lt;li&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/li&gt;
-&lt;li&gt;関数・クラスを使え&lt;/li&gt;
-&lt;li&gt;グローバル変数を使うべからず&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;である。この４つを一つずつ説明していこう。&lt;/p&gt;
-&lt;div class=&#34;section level3&#34;&gt;
-&lt;h3&gt;マジックナンバーを使うべからず&lt;/h3&gt;
-&lt;p&gt;ここでいうマジックナンバーとは、具体的な数字のことである&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;。例えば以下のコードを見てみよう。&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
-
- for(i in 1:5){
-  print(A[i]) 
- }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 38
-## [1] 72
-## [1] 32
-## [1] 39
-## [1] 4&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの &lt;code&gt;for(i in 1:5)&lt;/code&gt; の &lt;code&gt;5&lt;/code&gt; の部分である。最初に配列 &lt;code&gt;A&lt;/code&gt; を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;この &lt;code&gt;5&lt;/code&gt; がどのような意味を持つ数字なのか&lt;/li&gt;
-&lt;li&gt;配列の長さが、例えば &lt;code&gt;100&lt;/code&gt; に変わった時、&lt;code&gt;for&lt;/code&gt; の中身も変更しなくてはいけない&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;という２点の問題がすぐに挙げられる&lt;a href=&#34;#fn4&#34; class=&#34;footnoteRef&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;。以下のように書き換えると読みやすくなる。&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
- rundom_array_length &amp;lt;- length(A)
- 
- for(i in 1:rundom_array_length){
-  print(A[i]) 
- }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 68
-## [1] 37
-## [1] 58
-## [1] 79
-## [1] 15&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;-dry-dont-repeat-yourself&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/h3&gt;
-&lt;p&gt;繰り返すべからず、というのは奇妙に聞こえるかもしれない。プログラムは &lt;code&gt;for&lt;/code&gt; や &lt;code&gt;while&lt;/code&gt; といった繰り返し処理が得意だからである。もちろん、ここで言う、繰り返すべからず (以下、DRY)とは冗長（repepetive）なコードを避けよということである。これの反意語として、WET (We love typing)&lt;a href=&#34;#fn5&#34; class=&#34;footnoteRef&#34; id=&#34;fnref5&#34;&gt;&lt;sup&gt;5&lt;/sup&gt;&lt;/a&gt; がある。&lt;/p&gt;
-&lt;p&gt;例えば、以下のようなコードについてあなたはどのような感想を抱くだろうか？&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
- rundom_array_length &amp;lt;- length(A)
- B &amp;lt;- array(rundom_array_length)
- alpha &amp;lt;- 2
- beta &amp;lt;- 3
- 
- for(i in 1:rundom_array_length){
-  B[i] &amp;lt;- A[i]*alpha
- }
-  print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 172 142 152 138 184&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; for(i in 1:rundom_array_length){
-  B[i] &amp;lt;- A[i]*beta
- }
-  print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 258 213 228 207 276&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;わざわざからの配列 &lt;code&gt;B&lt;/code&gt; を定義する必要はなさそうという他に、 &lt;code&gt;for&lt;/code&gt; ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。&lt;/p&gt;
-&lt;p&gt;例えば、&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameter &amp;lt;- c(2, 3)
- 
- for( p in parameter){
-  A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
-  print(A*p)
- }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  26  48 162 142 150
-## [1] 174  33 222 201  48&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;とすれば、わかりやすいコードになる。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&#34;section level3&#34;&gt;
-&lt;h3&gt;関数・クラスを使え&lt;/h3&gt;
-&lt;p&gt;関数やクラスを使わなくても&lt;a href=&#34;#fn6&#34; class=&#34;footnoteRef&#34; id=&#34;fnref6&#34;&gt;&lt;sup&gt;6&lt;/sup&gt;&lt;/a&gt;先のコードの無駄な記述を減らすことはできる。しかし、一般的に関数やクラスを定義すると同じ機能を何度も呼び出すことができるので便利だし、記述も少なくてすむ。先のコードを例にすると、&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; Multiple_RundomArray_by  &amp;lt;- function(parameters){
- 
-  for( p in parameters){
-    A &amp;lt;- as.integer( runif(5, min = 1, max = 99) )
-    print(A*p)
-  }
-   
- }&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameters &amp;lt;- c(1:5)
- Multiple_RundomArray_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 63 40 84 58 33
-## [1]  72  58  68 142   6
-## [1]  90 177 270  54   6
-## [1] 284  16 128 324 252
-## [1] 425 355  45 185 130&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;となる&lt;a href=&#34;#fn7&#34; class=&#34;footnoteRef&#34; id=&#34;fnref7&#34;&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&#34;section level3&#34;&gt;
-&lt;h3&gt;グローバル変数を使うべからず&lt;/h3&gt;
-&lt;p&gt;グローバル変数は便利なので、使いがちであるが、グローバル変数は危険な代物である。グローバル変数とは関数やクラスの外で定義する変数のことである。&lt;/p&gt;
-&lt;p&gt;なぜグローバル変数が危険かというと、&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;プログラムのどの部分にも影響を及ぼし(→　変数が影響を与える範囲を制限できない)&lt;/li&gt;
-&lt;li&gt;どんな関数においてでも変更されやすい(→ いつ変数が変更されうる場所を特定できない)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;からである。つまり、コードのある部分が実際にどの範囲に影響をもたらしているかを特定することが困難になる危険性が発生してしまう。&lt;/p&gt;
-&lt;p&gt;具体例で見てみよう、先の関数と同じようなコード&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;- c(1:5)
-
- Multiple_Array_by &amp;lt;- function(parameters){
- 
-  for( p in parameters){
-    print(A*p)
-  }
-   
- }
- 
- parameters &amp;lt;- c(1:5)
- Multiple_Array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
-## [1]  2  4  6  8 10
-## [1]  3  6  9 12 15
-## [1]  4  8 12 16 20
-## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;をみてみよう。このコードで配列 &lt;code&gt;A&lt;/code&gt; は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; A &amp;lt;- c(5:1)
- parameters &amp;lt;- c(1:5)
- Multiple_Array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 5 4 3 2 1
-## [1] 10  8  6  4  2
-## [1] 15 12  9  6  3
-## [1] 20 16 12  8  4
-## [1] 25 20 15 10  5&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;これは、先の結果と異なっている。その原因は、配列 &lt;code&gt;A&lt;/code&gt; を書き換えたからである。さて、問題は &lt;em&gt;上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうか&lt;/em&gt; という点である。たとえば、 &lt;code&gt;parameters&lt;/code&gt; の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 &lt;code&gt;parameters&lt;/code&gt; が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 &lt;code&gt;A&lt;/code&gt; がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 &lt;code&gt;Multiple_Array_by (parameters)&lt;/code&gt; 　という記述部分では配列 &lt;code&gt;A&lt;/code&gt; に関数記述がないからである。&lt;/p&gt;
-&lt;p&gt;今回の場合は、&lt;code&gt;A&lt;/code&gt;　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧に配列には &lt;code&gt;A&lt;/code&gt; という誰でも思いつきそうな名前が付けらている。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&#34;section level3&#34;&gt;
-&lt;h3&gt;名前について&lt;/h3&gt;
-&lt;p&gt;これは、教義の中に入っていないのだが、変数や関数の名前はできるだけ意味のあるものの方がよい。たとえば、&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; f &amp;lt;- function(p){
-  
-  for( x in p){
-    print(c(1:5)*x)
-  }
-   
- }
- 
- p &amp;lt;- c(1:5)
- f(p)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
-## [1]  2  4  6  8 10
-## [1]  3  6  9 12 15
-## [1]  4  8 12 16 20
-## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;というなんの情報もない関数名や変数よりも、&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt; Multiple_Array_by &amp;lt;- function(parameters){
- 
-  for( p in parameters){
-    print(c(1:5)*p)
-  }
-   
- }
- 
- parameters &amp;lt;- c(1:5)
- Multiple_Array_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1 2 3 4 5
-## [1]  2  4  6  8 10
-## [1]  3  6  9 12 15
-## [1]  4  8 12 16 20
-## [1]  5 10 15 20 25&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;という名前の付け方の方がわかりやすいだろう。&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;section level2&#34;&gt;
-&lt;h2&gt;まとめ&lt;/h2&gt;
-&lt;p&gt;自分もプログラムに関しては勉強し始めて日が浅いので、学ぶことが多い。&lt;em&gt;なぜプログラミングを書く必要があるのか&lt;/em&gt;という問に対する答えは沢山ある。研究で使うためという人もいるし、再現性を確保するためと考えている人もどうやらいるようだ。&lt;/p&gt;
-&lt;p&gt;各理由に関わらず、１つ言えることは書かれたプログラムは他人が読み返すことが多いということである。論文を出版したり、教科書を書いたりした著者がコードを公開することは一般的である。コードを公開しなくても、査読のプロセスで査読者から求められたりすることもあれば&lt;a href=&#34;#fn8&#34; class=&#34;footnoteRef&#34; id=&#34;fnref8&#34;&gt;&lt;sup&gt;8&lt;/sup&gt;&lt;/a&gt;、共著者や指導教授に要求されることもあるだろう。たとえこれらに当てはまらなかってたとしても、一年後の自分は他人であるプログラムを書いた時のことはすっかり忘れてしまっているだろう。&lt;/p&gt;
-&lt;p&gt;個人的には、良いコーディングを身につけて有益な物を生み出したいと思っている。このポストでは触れなかったが、コードにコメントを付けて説明を加えることも大切である&lt;a href=&#34;#fn9&#34; class=&#34;footnoteRef&#34; id=&#34;fnref9&#34;&gt;&lt;sup&gt;9&lt;/sup&gt;&lt;/a&gt;。コメントの内容も他人が読むことを前提として記述することが大切である。くれぐれも、個人的な感想などを書いてはいけない&lt;a href=&#34;#fn10&#34; class=&#34;footnoteRef&#34; id=&#34;fnref10&#34;&gt;&lt;sup&gt;10&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-&lt;hr /&gt;
-&lt;ol&gt;
-&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;出典不明&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;記事を書く一週間前&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;マジックナンバーという用語は他の意味で使われることもある。例えば、人間は3つ列挙されると理解やされやすいという意味でマジックナンバー3と呼ばれることがあり、スティーブ・ジョブズは好んで自身のプレゼンで3という数字に&lt;a href=&#34;http://news.mynavi.jp/articles/2015/03/01/sj/&#34;&gt;こだわった&lt;/a&gt;と言われている。&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;他にも、配列の &lt;code&gt;A&lt;/code&gt; というネーミングも問題なのだがここでは無視する。&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn5&#34;&gt;&lt;p&gt;We Love Typing でWLTの気がするのだが、DRYと対応させたのだろうか。&lt;a href=&#34;#fnref5&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn6&#34;&gt;&lt;p&gt;Rでもクラスを定義して使用することができるようだが、筆者は未体験である。&lt;a href=&#34;#fnref6&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn7&#34;&gt;&lt;p&gt;ここまで来てお気付きの読者もいるかもしれないが、このプログラム、全くの無意味である。あくまで、説明のために使った。&lt;a href=&#34;#fnref7&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn8&#34;&gt;&lt;p&gt;あくまで伝聞である。筆者の体験ではない。&lt;a href=&#34;#fnref8&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn9&#34;&gt;&lt;p&gt;Rであれば&lt;code&gt;#&lt;/code&gt; の後はコメントとなってプログラムにコメントをかける。&lt;a href=&#34;#fnref9&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li id=&#34;fn10&#34;&gt;&lt;p&gt;これは個人的な体験にもとｐづいているわけではなく、一般論である。&lt;a href=&#34;#fnref10&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
 </description>
     </item>
     

@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://econgit.github.io/ja/post/2017/03/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</loc>
+    <lastmod>2017-03-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://econgit.github.io/ja/post/2017/03/why-write-a-code/</loc>
     <lastmod>2017-03-24T00:00:00+00:00</lastmod>
   </url>
@@ -13,21 +18,17 @@
   
   <url>
     <loc>https://econgit.github.io/ja/post/</loc>
-    <lastmod>2017-03-24T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://econgit.github.io/ja/</loc>
-    <lastmod>2017-03-24T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://econgit.github.io/ja/about/</loc>
-  </url>
-  
-  <url>
-    <loc>https://econgit.github.io/ja/post/1/01/%E8%89%AF%E3%81%84%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E6%9B%B8%E3%81%8F%E3%81%9F%E3%82%81%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/</loc>
   </url>
   
 </urlset>
