@@ -80,9 +80,8 @@ gdp &amp;lt;-
 ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
   geom_line() + geom_point() + 
   geom_text(vjust = 0, nudge_y = 800) + 
-  xlab(&amp;quot;GDP (10億円)&amp;quot;) + ylab(&amp;quot;年度&amp;quot;) + 
-  theme_light(base_family = &amp;quot;IPAGothic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/2017-03-24-why-write-a-code.ja_files/figure-html/unnamed-chunk-3-1.svg&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+  xlab(&amp;quot;GDP (10億円)&amp;quot;) + ylab(&amp;quot;年度&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-03-24-why-write-a-code.ja_files/figure-html/unnamed-chunk-3-1.pdf&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;最後の図は，ここで書かれたコードによる出力です。環境を整えさえすれば，友人や1年後の自分がこの図を再現することも容易なはずです。（パッケージの仕様が大きく変わらない限り，という註釈付きですが・・・・それは Excel を使っていても同じことでしょう）&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level2&#34;&gt;
