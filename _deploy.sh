@@ -2,9 +2,8 @@
 
 set -e
 
-
-
 [ -z "${GITHUB_PAT}" ] && exit 0
+echo "${TRAVIS_BRANCH}"
 [ "${TRAVIS_BRANCH}" != "source" ] && exit 0
 
 git config --global user.email "akira00120@gmail.com"
