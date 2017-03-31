@@ -15,12 +15,13 @@ branches:
   env:
     global:
       - secure: "Enb8BOvimZE7eYzOl2q9XQjE9nGyZp4CXZmGnzLvk1rBxOGvhDB6OrRW9qzuR9ctNhYT0DDLNsYUOgCxFuCj2mlXG5g/oPYgQVd3KUwGHhQ7PqRUT7FSe14Cw0RMKar09az/OwBpA/B5ZQRlA+K5O7I1CXnDYPqPxSvsk3cNnVGd0/u/hxDNtuLvy1+hZ4UihVloTjJgaaMeBcnhLT+I65umexcqjZ7Gdags3tkNYt8tIo20AS5M9gV5WlN0Ci4uIO5ujxYFR+s+sXDdCvpEpEGliwkEJB+qa2jm8+WfZudhDI4CQIoJhosuSTfm+TEAdob6eMQmPUJpBNAu2Or3XtnIAoH40EVCyAhkI1LCO71qjLIfEyCJ18JGwyjCZyKf3ISG/CWeyyO09bkRuNb4k7MuUjsorzRbRlRIVv95/UB69HQ9a/l8xZoUNthk3S7q8eqP8fOm8ntKfblYWot0VWDDrC4XPMiy0eMzvfYYQpxzfrRDBKXwnlf7bi8NGmFOqQD0C54Ajo2Y/18iLnqaUKIm7hRGHRM9lnAD8JHpLvCI+cTZS7ShcOAHkEeZdkP6ckhQiT7pnmEFW6Dqc2THYR/PSc3Ju2Qh9TkuMDwGgWJeb2FZ4Gq14LIpdLtjr/n2rdMAiEy3riD8QiB3WgXdE18FanFbxt2BiPUyu87yakU="
+
 before_script:
   - Rscript -e "update.packages(.libPaths()[1], ask = FALSE)"
   - "[ -x \"$HOME/bin/hugo\" ] || Rscript -e \"blogdown::install_hugo()\""
   - chmod +x ./_build.sh
-after_success:
   - chmod +x ./_deploy.sh
+
 script:
   - ./_build.sh
   - ./_deploy.sh
