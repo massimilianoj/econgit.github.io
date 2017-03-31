@@ -148,11 +148,11 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
  for(i in 1:5){
   print(A[i]) 
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 77
-## [1] 40
-## [1] 56
-## [1] 44
-## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 38
+## [1] 72
+## [1] 32
+## [1] 39
+## [1] 4&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの &lt;code&gt;for(i in 1:5)&lt;/code&gt; の &lt;code&gt;5&lt;/code&gt; の部分である。最初に配列 &lt;code&gt;A&lt;/code&gt; を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;この &lt;code&gt;5&lt;/code&gt; がどのような意味を持つ数字なのか&lt;/li&gt;
@@ -165,11 +165,11 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
  for(i in 1:rundom_array_length){
   print(A[i]) 
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 91
+&lt;pre&gt;&lt;code&gt;## [1] 68
+## [1] 37
+## [1] 58
 ## [1] 79
-## [1] 87
-## [1] 45
-## [1] 30&lt;/code&gt;&lt;/pre&gt;
+## [1] 15&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;-dry-dont-repeat-yourself&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;繰り返すべからず (DRY: Don’t repeat yourself)&lt;/h3&gt;
@@ -185,12 +185,12 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
   B[i] &amp;lt;- A[i]*alpha
  }
   print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 104 172  94   2 148&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 172 142 152 138 184&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; for(i in 1:rundom_array_length){
   B[i] &amp;lt;- A[i]*beta
  }
   print(B)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 156 258 141   3 222&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 258 213 228 207 276&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;わざわざからの配列 &lt;code&gt;B&lt;/code&gt; を定義する必要はなさそうという他に、 &lt;code&gt;for&lt;/code&gt; ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。&lt;/p&gt;
 &lt;p&gt;例えば、&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameter &amp;lt;- c(2, 3)
@@ -199,8 +199,8 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
   A &amp;lt;-  as.integer( runif(5, min = 1, max = 99) )
   print(A*p)
  }&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 124 184 122 100 106
-## [1] 249 129 249   9  51&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  26  48 162 142 150
+## [1] 174  33 222 201  48&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;とすれば、わかりやすいコードになる。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
@@ -217,11 +217,11 @@ ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
 &lt;p&gt;としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt; parameters &amp;lt;- c(1:5)
  Multiple_RundomArray_by (parameters)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 54 89 10 58 65
-## [1]   8 160  84 192   8
-## [1] 213  51 222 243  54
-## [1] 148 372 192 260 188
-## [1] 375 415  50 425 235&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 63 40 84 58 33
+## [1]  72  58  68 142   6
+## [1]  90 177 270  54   6
+## [1] 284  16 128 324 252
+## [1] 425 355  45 185 130&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;となる&lt;a href=&#34;#fn7&#34; class=&#34;footnoteRef&#34; id=&#34;fnref7&#34;&gt;&lt;sup&gt;7&lt;/sup&gt;&lt;/a&gt;。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&#34;section level3&#34;&gt;
