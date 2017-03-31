@@ -81,7 +81,7 @@ library(readxl)
 gdp_xls <- read_excel("../../static/data/27a1_jp.xls", sheet = 1, skip = 4) 
 ```
 
-```{r, message = FALSE, warning = FALSE, dev = "pdf", dev.args=list(family = "Japan1Ryumin")}
+```{r, message=FALSE, warning=FALSE, dev='svg'}
 library(tidyverse)
 
 gdp0 <- gdp_xls[c(2, 22), 2:ncol(gdp_xls)]
@@ -93,7 +93,8 @@ gdp <-
 ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
   geom_line() + geom_point() + 
   geom_text(vjust = 0, nudge_y = 800) + 
-  xlab("GDP (10億円)") + ylab("年度")
+  xlab("GDP (10億円)") + ylab("年度") + 
+  theme_light(base_family = "IPAGothic")
 ```
 
 
