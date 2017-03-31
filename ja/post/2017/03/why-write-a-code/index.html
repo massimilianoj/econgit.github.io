@@ -137,8 +137,9 @@ gdp &lt;-
 ggplot(gdp, aes(x = year, y = gdp, label = gdp)) +
   geom_line() + geom_point() + 
   geom_text(vjust = 0, nudge_y = 800) + 
-  xlab(&quot;GDP (10億円)&quot;) + ylab(&quot;年度&quot;)</code></pre>
-<p><img src="../../../../../post/2017-03-24-why-write-a-code.ja_files/figure-html/unnamed-chunk-3-1.pdf" width="672" /></p>
+  xlab(&quot;GDP (10億円)&quot;) + ylab(&quot;年度&quot;) + 
+  theme_light(base_family = &quot;IPAGothic&quot;)</code></pre>
+<p><img src="../../../../../post/2017-03-24-why-write-a-code.ja_files/figure-html/unnamed-chunk-3-1.svg" width="672" /></p>
 <p>最後の図は，ここで書かれたコードによる出力です。環境を整えさえすれば，友人や1年後の自分がこの図を再現することも容易なはずです。（パッケージの仕様が大きく変わらない限り，という註釈付きですが・・・・それは Excel を使っていても同じことでしょう）</p>
 </div>
 <div class="section level2">
