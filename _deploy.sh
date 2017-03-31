@@ -1,13 +1,9 @@
 #!/bin/sh
 
 set -e
-current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 [ -z "${GITHUB_PAT}" ] && exit 0
-echo "${TRAVIS_BRANCH}"
-echo $current_branch
-
-[ "$current_branch" != "source" ] && exit 0
+[ "${TRAVIS_PULL_REQUEST}" != "false" -o "${TRAVIS_BRANCH}" != "source" ] && exit 0
 
 git config --global user.email "akira00120@gmail.com"
 git config --global user.name "Akira Matsui"
