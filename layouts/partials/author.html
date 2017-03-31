@@ -1,0 +1,6 @@
+{{ $author := index .Site.Data._authors .Params.author }}
+{{ if $author }}
+<div class="article-author">
+  by <a href="{{ $author.web }}">{{ $author.name }}</a>
+</div>
+{{ end }}
