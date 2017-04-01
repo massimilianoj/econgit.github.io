@@ -44,27 +44,27 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
  A <-  sample(1:99, 5)
  for (i in 1:5) {
-  print(A[i]) 
+  print(A[i])
  }
 
 ```
 
-出力にもあるように、このコードは適当な1-99のランダムな整数を入れた配列を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの `for(i in 1:5)` の `5` の部分である。最初に配列 `A` を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、
+出力にもあるように、このコードは適当な1-99のランダムな整数を入れたベクトル[^4]を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの `for(i in 1:5)` の `5` の部分である。最初にベクトル `A` を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、
 
 - この `5` がどのような意味を持つ数字なのか
-- 配列の長さが、例えば `100` に変わった時、`for` の中身も変更しなくてはいけない
+- ベクトルの長さが、例えば `100` に変わった時、`for` の中身も変更しなくてはいけない
 
 
-という２点の問題がすぐに挙げられる[^4]。以下のように書き換えると読みやすくなる。
+という２点の問題がすぐに挙げられる。以下のように書き換えると読みやすくなる。
 
 
 
 ```{r}
- 
+
  A <-  sample(1:99, 5)
 
  for (i in seq_along(A)) {
-  print(A[i]) 
+  print(A[i])
  }
 ```
 
@@ -79,40 +79,40 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- A <-  sample(1:99, 5)
- B <- array(seq_along(A))
+ SampleVector <-  sample(1:99, 5)
+ AnswerVector1 <- seq_along(A)
+ AnswerVector2 <- seq_along(A)
  alpha <- 2
  beta <- 3
- 
- for (i in seq_along(A)) {
-  B[i] <- A[i] * alpha
- }
-  print(B)
 
  for (i in seq_along(A)) {
-  B[i] <- A[i] * beta
+  AnswerVector1[i] <- SampleVector[i] * alpha
  }
-  print(B)
+ for (i in seq_along(SampleVector)) {
+  AnswerVector2[i] <- SampleVector[i] * beta
+ }
+ 
+ print(AnswerVector1)
+ print(AnswerVector2)
 
 ```
 
-わざわざからの配列 `B` を定義する必要はなさそうという他に、 `for` ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。
+わざわざからのベクトル `AnswerVector1`, `AnswerVector2` を定義する必要がなさそうだという他に、 `for` ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。
 
 例えば、
 
 
 
 ```{r}
- 
+
  parameter <- c(2, 3)
- 
- for ( p in parameter) {
-  A <-  as.integer( runif(5, min = 1, max = 99) )
+
+ for (p in parameter) {
+  A <-  sample(1:99, 5)
   print(A * p)
  }
- 
 ```
-とすれば、わかりやすいコードになる。
+とすれば、短くてわかりやすいコードになる。
 
 
 
@@ -126,13 +126,13 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
  Multiple_RundomArray_by  <- function(parameters){
   for (p in parameters) {
-    A <- as.integer( runif(5, min = 1, max = 99) )
-    print(A * p)
+    SampleVector <- sample(1:99, 5)
+    print(SampleVector * p)
   }
  }
 ```
 
-としておけば、ランダムな要素を持つ配列にパラメタをかけるという作業を自動でやってくれる。実際、
+としておけば、ランダムな要素を持つベクトルにパラメタをかけるという作業を自動でやってくれる。実際、
 
 
 ```{r}
@@ -146,8 +146,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ### グローバル変数を使うべからず
 
-グローバル変数は便利なので、使いがちであるが、グローバル変数は危険な代物である。グローバル変数とは関数やクラスの外で定義する変数のことである。
-
+グローバル変数は便利なので使いがちだが、危険な代物である。グローバル変数とは関数やクラスの外で定義する変数のことである。
 
 なぜグローバル変数が危険かというと、
 
@@ -155,40 +154,40 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 - どんな関数においてでも変更されやすい(→ 変数が変更されうる場所を特定できない)
 
 
-からである。つまり、コードのある部分が実際にどの範囲に影響をもたらしているかを特定することが困難になる危険性が発生してしまう。
+からである。つまり、グローバル変数がコードのどの範囲に影響をもたらすかを特定することが困難になる危険性があるのだ。
 
 
 具体例で見てみよう、先の関数と同じようなコード
 
 ```{r}
 
- A <- c(1:5)
+ Vector <- c(1:5)
 
  Multiple_Array_by <- function(parameters){
-  for ( p in parameters) {
-    print(A * p)
+  for (p in parameters) {
+    print(Vector * p)
   }
  }
 
  parameters <- 1:5
- Multiple_Array_by (parameters)
+ Multiple_Array_by(parameters)
  
 ```
 
-をみてみよう。このコードで配列 `A` は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？
+をみてみよう。このコードでベクトル `Vector` は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？
 
 
 ```{r}
 
- A <- c(5:1)
+ Vector <- c(5:1)
  parameters <- c(1:5)
- Multiple_Array_by (parameters)
+ Multiple_Array_by(parameters)
 
 ```
 
-これは、先の結果と異なっている。その原因は、配列 `A` を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければ配列 `A` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分では配列 `A` に関数記述がないからである。
+これは、先の結果と異なっている。その原因は、ベクトル `Vector` を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければベクトル `Vector` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分ではベクトル `Vector` に関数記述がないからである。
 
-今回の場合は、`A`　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧に配列には `A` という誰でも思いつきそうな名前が付けらている。
+今回の場合は、`Vector`　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧にベクトルには `Vector` という誰でも思いつきそうな名前が付けらている。
 
 
 ### 名前について
@@ -198,14 +197,14 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 ```{r}
 
  f <- function(p){
-  for( x in p){
+  for (x in p) {
     print(c(1:5) * x)
   }
  }
- 
+
  p <- c(1:5)
  f(p)
- 
+
 ```
 
 
@@ -213,17 +212,15 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- 
-
  multiple_array_by <- function(parameters){
-  for( p in parameters){
+  for (p in parameters) {
     print(c(1:5) * p)
   }
  }
- 
+
  parameters <- c(1:5)
- multiple_array_by (parameters)
- 
+ multiple_array_by(parameters)
+
 ```
 
 という名前の付け方の方がわかりやすいだろう。
@@ -241,8 +238,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 [^1]: 出典不明
 [^2]: 記事を書く一週間前
 [^3]: マジックナンバーという用語は他の意味で使われることもある。例えば、人間は3つ列挙されると理解やされやすいという意味でマジックナンバー3と呼ばれることがあり、スティーブ・ジョブズは自身のプレゼンで3という数字に[こだわった](http://news.mynavi.jp/articles/2015/03/01/sj/)と言われている。
-
-[^4]: 他にも、配列の `A` というネーミングも問題なのだがここでは無視する。
+[^4]: R では1次元の配列はベクトル。2次元は行列。3次元以上を配列と呼ぶようです([Kenji Sato](https://www.kenjisato.jp)からの指摘)。
 [^5]: Rでもクラスを定義して使用することができるようだが、筆者は未体験である。
 [^6]: ここまで来てお気付きの読者もいるかもしれないが、このプログラム、全くの無意味である。あくまで、説明のために使った。
 [^7]: あくまで伝聞である。筆者の体験ではない。
