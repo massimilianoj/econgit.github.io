@@ -42,14 +42,14 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- A <-  sample(1:99, 5)
+ vector <-  sample(1:99, 5)
  for (i in 1:5) {
-  print(A[i])
+  print(vector[i])
  }
 
 ```
 
-出力にもあるように、このコードは適当な1-99のランダムな整数を入れたベクトル[^4]を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの `for(i in 1:5)` の `5` の部分である。最初にベクトル `A` を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、
+出力にもあるように、このコードは適当な1-99のランダムな整数を入れたベクトル[^4]を用意して、それをだすコードである。マジックナンバーとは、このコードでいうところの `for(i in 1:5)` の `5` の部分である。最初にベクトル `vector` を用意するときにと指定したのだが、具体的に数字を入れることで問題のあるコードになっている。具体的には、
 
 - この `5` がどのような意味を持つ数字なのか
 - ベクトルの長さが、例えば `100` に変わった時、`for` の中身も変更しなくてはいけない
@@ -61,10 +61,10 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- A <-  sample(1:99, 5)
+ vector <-  sample(1:99, 5)
 
- for (i in seq_along(A)) {
-  print(A[i])
+ for (i in seq_along(vector)) {
+  print(vector[i])
  }
 ```
 
@@ -79,25 +79,25 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- SampleVector <-  sample(1:99, 5)
- AnswerVector1 <- seq_along(A)
- AnswerVector2 <- seq_along(A)
+ sampleVector <-  sample(1:99, 5)
+ answerVector1 <- seq_along(sampleVector)
+ answerVector2 <- seq_along(sampleVector)
  alpha <- 2
  beta <- 3
 
- for (i in seq_along(A)) {
-  AnswerVector1[i] <- SampleVector[i] * alpha
+ for (i in seq_along(sampleVector)) {
+  answerVector1[i] <- sampleVector[i] * alpha
  }
- for (i in seq_along(SampleVector)) {
-  AnswerVector2[i] <- SampleVector[i] * beta
+ for (i in seq_along(sampleVector)) {
+  answerVector2[i] <- sampleVector[i] * beta
  }
  
- print(AnswerVector1)
- print(AnswerVector2)
+ print(answerVector1)
+ print(answerVector2)
 
 ```
 
-わざわざからのベクトル `AnswerVector1`, `AnswerVector2` を定義する必要がなさそうだという他に、 `for` ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。
+わざわざからのベクトル `answerVector1`, `answerVector2` を定義する必要がなさそうだという他に、 `for` ループを２回も書いているのが気になる。パラメタが変わっただけの同じようなコードを書くのは無駄な印象を受ける。
 
 例えば、
 
@@ -124,10 +124,10 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- Multiple_RundomArray_by  <- function(parameters){
+ multiple_rundom_array_by  <- function(parameters){
   for (p in parameters) {
-    SampleVector <- sample(1:99, 5)
-    print(SampleVector * p)
+    sampleVector <- sample(1:99, 5)
+    print(sampleVector * p)
   }
  }
 ```
@@ -138,7 +138,7 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 ```{r}
 
  parameters <- 1:5
- Multiple_RundomArray_by (parameters)
+ multiple_rundom_array_by (parameters)
 
 ```
 
@@ -161,33 +161,33 @@ QuantEconの中の[Writing Good Code](https://lectures.quantecon.org/py/writing_
 
 ```{r}
 
- Vector <- c(1:5)
+ vector <- c(1:5)
 
- Multiple_Array_by <- function(parameters){
+ multiple_array_by <- function(parameters){
   for (p in parameters) {
-    print(Vector * p)
+    print(vector * p)
   }
  }
 
  parameters <- 1:5
- Multiple_Array_by(parameters)
+ multiple_array_by(parameters)
  
 ```
 
-をみてみよう。このコードでベクトル `Vector` は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？
+をみてみよう。このコードでベクトル `vector` は関数の外で定義されている。もしかして、問題ないと感じるかもしれない。しかし、次のようなコードを見た時はどうだろうか？
 
 
 ```{r}
 
- Vector <- c(5:1)
+ vector <- c(5:1)
  parameters <- c(1:5)
- Multiple_Array_by(parameters)
+ multiple_array_by(parameters)
 
 ```
 
-これは、先の結果と異なっている。その原因は、ベクトル `Vector` を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければベクトル `Vector` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分ではベクトル `Vector` に関数記述がないからである。
+これは、先の結果と異なっている。その原因は、ベクトル `vector` を書き換えたからである。さて、問題は上のコードブロックを見ただけで結果が変わった原因を容易に特定できるかどうかという点である。たとえば、 `parameters` の内容を変更すれば、関数の返り値も変わることは容易に予想ができる。それは、 `parameters` が関数の引数になっているからである。しかし、今回の問題では、関数の定義部分に戻らなければベクトル `vector` がグローバル変数を用いていて、それが変更されたことが原因であると特定することは難しい。 ` Multiple_Array_by (parameters)` 　という記述部分ではベクトル `vector` に関数記述がないからである。
 
-今回の場合は、`Vector`　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧にベクトルには `Vector` という誰でも思いつきそうな名前が付けらている。
+今回の場合は、`vector`　が書き換わっているのが三行上のコードだったから良い。もしこれが、100行上だったら？ もしかして、関数の中だったら？ 多分、エラーの原因を特定するのは困難になるだろう。しかも、丁寧にベクトルには `vector` という誰でも思いつきそうな名前が付けらている。
 
 
 ### 名前について
