@@ -1,7 +1,7 @@
 ---
-title: "LaTex codes for math"
+title: "LaTeX codes (for math)"
 author: "Massimiliano"
-date: "3/6/2017"
+date: "2017-04-03"
 output: 
   html_document:
     number_sections: yes
@@ -11,21 +11,17 @@ output:
 
 # To Start
 
-I got in R, Markdown, LaTex because of an assignment in Macroeconomics. We have been told we could get a bonus if submitted the assignment in R writing in LaTex.Being a Microsoft Office and Stata user I knew nothing about this software and these _languages_.But I decided that it was time to learn. 
+I got in R, Markdown, LaTeX because of an assignment in Macroeconomics. We have been told we could get a bonus if submitted the assignment in R writing in LaTex.Being a Microsoft Office and Stata user I knew nothing about this software and these _languages_.But I decided that it was time to learn. 
 
-Luckly, there is plenty of information on the net about this topic. However, at the beginning, I found more useful just to replicate the materials provided by the professor in class to get confidence with the new tools. So while learning I ended up writing down the basic codes to start writing economic equations and formulas in LaTex.
+Luckly, there is plenty of information on the net about this topic. However, at the beginning, I found more useful just to replicate the materials provided by the professor in class to get confidence with the new tools. So while learning I ended up writing down the basic codes to start writing economic equations and formulas in LaTeX.
 
-These notes contain code included in an easy and more complex examples. I think you could find them useful for practice and for a quick review. In fact, when you understand the potentiality of the new tools and that you can use for writing your assignments, articles and thesis you will want to know more. In this case I could suggest to have a look to [LaTex Stack Exchange](http://tex.stackexchange.com/),[ShareLaTex](https://it.sharelatex.com/learn/Mathematical_expressions), [Yihui Xie, _bookdown:Authoring Books andTechnical Documents with R Markdown_](https://bookdown.org/yihui/bookdown/).
+These notes contain codes for writing mathematics in LaTeX with examples. I think you could find them useful for practice and for a quick review. In fact, when you understand the potentiality of the new tools and that you can use for writing your assignments, articles and thesis you will want to know more. In this case I could suggest to have a look at [LaTeX Stack Exchange](http://tex.stackexchange.com/),[ShareLaTeX](https://it.sharelatex.com/learn/Mathematical_expressions), [Yihui Xie, _bookdown:Authoring Books andTechnical Documents with R Markdown_](https://bookdown.org/yihui/bookdown/).
 
 I hope you will find my notes useful for your first assignments.
 
 # Greek letters
 
-To write Greek letters the symbol of "\\" (backslash) is followed by the name of the Greek letter. 
-
-Note that the symbol of "\\" is one of the main commands to write codes. 
-
-For example, some of the most used Greek letters in Economics:
+Here a list of some of the most used Greek letters in Economics:
 
 ```{r, include = FALSE}
 library(tidyverse)
@@ -107,7 +103,7 @@ s_paren = paste(
 ```
 
 
-that is writing the symbol of `\` (blackslash) followed by `\left` _before opening the parenthesis_ and `\` followed by `\right` _before closing the parenthesis_. 
+that is writing `\left` _before opening the parenthesis_ and `\right` _before closing the parenthesis_. 
 
 In case of braces, we should use the following notation:
 
@@ -118,7 +114,7 @@ s_curly = paste(
   sep = "\n") %>% two_column_layout
 ```
 
-The difference with respect to parenthesis and brackets is `\` _after left and right_.
+Note the difference with brackets that are written `\left\` and `\right\`.
 
 Example:
 
@@ -275,8 +271,7 @@ s_der = paste(
 sep="\n")%>% two_column_layout
 ```
 
-To write partial differentiation, write the symbol 
-`\` followed by `\partial` in the fraction notation
+To write partial differentiation, write `\partial` in the fraction notation
 
 Example:
 
@@ -305,7 +300,7 @@ sep = "\n")%>% two_column_layout
 
 #Summation
 
-The code to write summation is the following: symbol of `\` followed by _sum_, `_` and _braces with lower bound of summation_ followed by the symbol `^` _before the brace with the upper bound of summation_. 
+The code to write summation is the following: symbol of `\sum_` followed by _braces with lower bound of summation_ and `^` _before the brace with the upper bound of summation_. 
 
 Example:
 
